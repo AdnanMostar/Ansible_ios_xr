@@ -1,0 +1,42 @@
+---
+- name: Checking all parts of Parametized Parent Policy (IOS-XR Aaachen)
+  hosts: xr-aach
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: show commands are running
+      iosxr_command:
+        commands:
+          - show rpl route-policy transit-in
+          # This is a nested Parametized parent Policy wich has three child policy below
+          - sh rpl route-policy ebgp-as-filter
+          # This is the first child Policy with no variable values
+          - sh rpl as-path-set bogon-asns
+          # This is a part of child policy above
+          - sh rpl route-policy ebgp-filter
+          # This is the second child policy with variable prefix-set
+          - sh rpl prefix-set  ebgp-filter-v4
+          # This is a part of child policy above
+          - sh rpl route-policy process-upstream-routes
+          # This is a parametized child policy with variable LP
+          - show rpl route-policy transit-in attachpoints
+          # It tells us where our parent policy has beeen applied 
+
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+# Commands to run:
+#1) ansible-playbook ios-xr_aachen_sh_telia_param_policy.yaml -u akahric -k
+# !!Please change to your username and use your radius password when prompted
+#2) Please go to output directory to see the results of all commands executed
+

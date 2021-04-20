@@ -1,0 +1,67 @@
+---
+- name: Check Int description
+  hosts: xr-9k
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: show commands are running
+      iosxr_command:
+        commands:
+          - sh int descr	
+          - sh ip int br | i Up	
+          - sh run int 	
+          - sh run group core-interface	
+          - sh run router static	
+          - sh run mpls	
+          - sh mpls ldp neighbor brief
+          - sh mpls ldp inter
+          - sh mpls ldp summ
+          - sh run router isis	
+          - sh run group isis-core	
+          - sh isis topology	
+          - sh isis int br	
+          - sh isis database verbose cr1.s05.00-00	
+          - sh rsvp neighb	
+          - sh rsvp int
+          - sh rsvp session	
+          - sh bgp ipv4 unicast neighb brief	
+          - sh bgp vpnv4 unicast neighb brief
+          - sh bgp ipv6 unicast neighb brief
+          - sh bgp neighbor-group all configuration	
+          - sh bgp neighbor-group ibgp-rrclients-v4 users	
+          - sh run vrf 	
+          - sh run group vrf-hl-nbr	
+          - sh run group vrf-bl-nbr
+          - sh run group vrf-hl-nbr-sec
+          - sh run group vrf-bl-nbr-sec
+          - sh run group inet-hl-nbr-sec
+          - sh run group inet-bl-nbr-sec
+          - sh rpl route-policy	
+          - sh rpl prefix-set
+          - sh rpl as-path-set	
+          - sh rpl community-set	
+          - sh run l2vpn
+          - show l2vpn xconnect
+          - sh bgp l2vpn vpws summary
+          - sh bgp l2vpn vpws neighbors brief
+          - sh bgp l2vpn vpws		
+          - sh access-list	
+          - sh object-group network  ipv4
+          - sh run snmp  
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+#Commands to run:
+# ansible-playbook ios-xr_sh_revers_engin_9k.yaml -u akahric -k
+# 1.)Please change to your username and use your radius password when prompted
+# 2.)Please move to output directory to see the results of all commands 

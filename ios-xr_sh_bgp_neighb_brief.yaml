@@ -1,0 +1,29 @@
+---
+- name: Check BGP Neighbor for all address family
+  hosts: xr-9k
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: show commands are running 
+      iosxr_command:
+        commands:
+          - show bgp ipv4 unicast neighbor brief
+          - show bgp ipv6 unicast neighbor brief
+          - show bgp vpnv4 unicast neighbor brief
+          - show bgp vpnv6 unicast neighbor brief
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+# Commands to run:
+#1) ansible-playbook ios-xr_sh_bgp_neighb_brief.yaml -u akahric -k
+# !!Please change to your username and use your radius password when prompted

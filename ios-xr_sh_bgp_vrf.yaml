@@ -1,0 +1,39 @@
+---
+- name: Check VRF & BGP on IOS XR devices 
+  hosts: xr-9k
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: show commands are running
+      iosxr_command:
+        commands:
+          - sh bgp vrf beo summ
+          - sh run vrf beo
+          - sh run router bgp 8469 vrf beo
+          - sh run group vrf-hl-nbr	
+          - sh run group vrf-bl-nbr
+          - sh run group vrf-hl-nbr-sec
+          - sh run group vrf-bl-nbr-sec
+          - sh run group inet-hl-nbr-sec
+          - sh run group inet-bl-nbr-sec
+          - sh route vrf beo
+          - sh bgp vrf beo
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+# Commands to run:
+#1) ansible-playbook ios-xr_sh_bgp_vrf.yaml -u akahric -k
+# !!Please change to your username and use your radius password when prompted
+#2) Please go to output directory to see the results of all commands executed
+#3)!Please change the name of VRF beo to another one wich will  meet your needs
+

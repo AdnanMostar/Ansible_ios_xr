@@ -1,0 +1,29 @@
+---
+- name: Check BGP Neighbor for all address family
+  hosts: xr-9k
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: show commands are running 
+      iosxr_command:
+        commands:
+          - sh rpl route-policy	
+          - sh rpl prefix-set
+          - sh rpl as-path-set	
+          - sh rpl community-set	
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+# Commands to run:
+#1) ansible-playbook ios-xr_sh_bgp_policy_filters.yaml -u akahric -k
+# !!Please change to your username and use your radius password when prompted

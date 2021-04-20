@@ -1,0 +1,32 @@
+---
+- name: Check ISIS configuration and operation on IOS XR routers
+  hosts: xr-all
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: show commands are running
+      iosxr_command:
+        commands:
+          - sh run router isis	
+          - sh run group isis-core	
+          - sh isis topology	
+          - sh isis int br	
+          - sh isis database verbose cr1.s05.00-00	 
+    
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+#Commands to run:
+# ansible-playbook ios-xr_sh_isis.yaml -u akahric -k
+# 1.)Please change to your username and use your radius password when prompted
+# 2.)Please move to output directory to see the results of all commands 

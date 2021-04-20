@@ -1,0 +1,28 @@
+---
+- name: Check QOS on XR 9000 Cisco routers
+  hosts: xr-9k
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: show commands are running
+      iosxr_command:
+        commands:
+          - show run policy-map
+          - show run class-map 
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+#Commands to run:
+# ansible-playbook ios-xr_sh_qos_9k.yaml -u akahric -k
+# 1.)Please change to your username and use your radius password when prompted
+# 2.)Please move to output directory to see the results of all commands 

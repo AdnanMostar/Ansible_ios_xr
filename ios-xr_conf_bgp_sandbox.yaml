@@ -1,0 +1,44 @@
+---
+- name: Checking Parametized Policy
+  hosts: xr-sandbox
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: configure global bgp as 65000
+      cisco.iosxr.iosxr_bgp:
+        bgp_as: 65000
+        router_id: 1.1.1.1
+        neighbors:
+        - neighbor: 182.168.10.1
+          remote_as: 500
+          description: PEER_1
+        - neighbor: 192.168.20.1
+          remote_as: 500
+          update_source: GigabitEthernet 0/0/0/0
+        address_family:
+        - name: ipv4
+          cast: unicast
+          networks:
+          - network: 192.168.2.0/23
+          - network: 10.0.0.0/8
+          redistribute:
+          - protocol: ospf
+            id: 400
+            metric: 11
+                
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+# Commands to run:
+#1) ansible-playbook ios-xr_conf_bgp_sandbox.yaml -u admin -k
+# !!Please change to your username and use your radius password when prompted

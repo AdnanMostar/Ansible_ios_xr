@@ -1,5 +1,5 @@
 - name: Push VRRP configurtion commands to IOS XR
-  hosts: xr-sandbox
+  hosts: ios-xr
   gather_facts: false
   connection: local
 
@@ -9,11 +9,10 @@
         lines:
         - name my-ansible-master
         - priority 130
-        - address 7.7.7.7
-        - address 9.9.9.9 secondary
+        - address 192.168.23.2
         parents:
         - router vrrp 
-        - interface TenGigE0/0/0/3.130
+        - interface GigabitEthernet0/0/0/1
         - address-family ipv4
         - vrrp 130
 

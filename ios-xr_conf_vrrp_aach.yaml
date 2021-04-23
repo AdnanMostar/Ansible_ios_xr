@@ -1,4 +1,4 @@
-- name: Push VRRP configurtion commands to IOS XR
+- name: Push VRRP configuration commands to IOS XR
   hosts: ios-xr
   gather_facts: false
   connection: local

@@ -7,7 +7,7 @@
     - name: configuration commands are running
       cisco.iosxr.iosxr_config:
         lines:
-        - name my-ansible-master
+        - name master
         - priority 130
         - address 192.168.23.2
         parents:

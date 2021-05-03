@@ -1,0 +1,27 @@
+---
+- name: Checking Parametized Policy
+  hosts: xr-sandbox
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: show Parent & Child Parametized Policy
+      iosxr_command:
+        commands:
+          - show ip int brief
+
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+# Commands to run:
+#1) ansible-playbook xr_test.sandbox.yaml -u admin -k
+# !!Please use the following password  C1sco12345 when prompted

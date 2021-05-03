@@ -28,5 +28,5 @@
       with_items: "{{ print_output.stdout }}"
 
 # Commands to run:
-#1) ansible-playbook ios-xr_conf_vrrp_aach.yaml -u cisco -k
+#1) ansible-playbook ios-xr_conf_vrrp_aach.yaml -u akahric -k
 # !!Please change to your username and use your radius password when prompted

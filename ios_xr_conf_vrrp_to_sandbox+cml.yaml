@@ -12,7 +12,7 @@
         - address 192.168.23.2
         parents:
         - router vrrp 
-        - interface GigabitEthernet0/0/0/1
+        - interface GigabitEthernet0/0/0/0
         - address-family ipv4
         - vrrp 130
 
@@ -28,7 +28,7 @@
       with_items: "{{ print_output.stdout }}"
       
 - name: Push VRRP configuration commands to IOS_XR_SANNDBOX
-  hosts: ios-xr
+  hosts: xr-sandbox
   gather_facts: false
   connection: local
 

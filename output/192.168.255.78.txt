@@ -1,0 +1,70 @@
+Syslog logging: enabled (0 messages dropped, 0 flushes, 0 overruns)
+    Console logging: level warnings, 18 messages logged
+    Monitor logging: level debugging, 0 messages logged
+    Trap logging: level informational, 0 messages logged
+    Buffer logging: level debugging, 196 messages logged
+
+Log Buffer (2097152 bytes):
+
+LC/0/0/CPU0:May  3 17:36:58.226 UTC: ifmgr[316]: %PKT_INFRA-LINK-5-CHANGED : Interface GigabitEthernet0/0/0/3, changed state to Administratively Down 
+LC/0/0/CPU0:May  3 17:36:58.226 UTC: ifmgr[316]: %PKT_INFRA-LINK-5-CHANGED : Interface GigabitEthernet0/0/0/4, changed state to Administratively Down 
+LC/0/0/CPU0:May  3 17:36:58.226 UTC: ifmgr[316]: %PKT_INFRA-LINK-5-CHANGED : Interface GigabitEthernet0/0/0/5, changed state to Administratively Down 
+LC/0/0/CPU0:May  3 17:36:58.226 UTC: ifmgr[316]: %PKT_INFRA-LINK-5-CHANGED : Interface GigabitEthernet0/0/0/6, changed state to Administratively Down 
+LC/0/0/CPU0:May  3 17:36:58.226 UTC: ifmgr[316]: %PKT_INFRA-LINK-5-CHANGED : Interface GigabitEthernet0/0/0/7, changed state to Administratively Down 
+LC/0/0/CPU0:May  3 17:36:58.226 UTC: ifmgr[316]: %PKT_INFRA-LINK-5-CHANGED : Interface GigabitEthernet0/0/0/8, changed state to Administratively Down 
+LC/0/0/CPU0:May  3 17:36:58.226 UTC: ifmgr[316]: %PKT_INFRA-LINK-5-CHANGED : Interface GigabitEthernet0/0/0/9, changed state to Administratively Down 
+RP/0/RP0/CPU0:May  3 17:36:59.529 UTC: kim[261]: %INFRA-KIM-6-LOG_INFO : XR statistics will be pushed into the Linux kernel at 5 second intervals 
+RP/0/RP0/CPU0:May  3 17:38:54.325 UTC: SSHD_[66610]: %SECURITY-SSHD-4-INFO_FAILURE : Failed autentication attempt by user 'ubuntu' from '192.168.255.107' on 'vty0' 
+RP/0/RP0/CPU0:May  3 17:38:57.965 UTC: SSHD_[66621]: %SECURITY-SSHD-4-INFO_FAILURE : Failed autentication attempt by user 'ubuntu' from '192.168.255.107' on 'vty1' 
+RP/0/RP0/CPU0:May  3 17:38:58.045 UTC: SSHD_[66610]: %SECURITY-SSHD-6-INFO_GENERAL : Client closes socket connection 
+RP/0/RP0/CPU0:May  3 17:38:58.046 UTC: SSHD_[66610]: %SECURITY-SSHD-3-ERR_GENERAL : Failed to receive User authentication request 
+RP/0/RP0/CPU0:May  3 17:39:02.501 UTC: SSHD_[66621]: %SECURITY-SSHD-6-INFO_GENERAL : Client closes socket connection 
+RP/0/RP0/CPU0:May  3 17:39:02.501 UTC: SSHD_[66621]: %SECURITY-SSHD-3-ERR_GENERAL : Failed to receive User authentication request 
+RP/0/RP0/CPU0:May  3 17:39:12.259 UTC: SSHD_[66642]: %SECURITY-SSHD-4-INFO_FAILURE : Failed autentication attempt by user 'ubuntu' from '192.168.255.107' on 'vty0' 
+RP/0/RP0/CPU0:May  3 17:39:12.371 UTC: SSHD_[66642]: %SECURITY-SSHD-6-INFO_GENERAL : Client closes socket connection 
+RP/0/RP0/CPU0:May  3 17:39:12.371 UTC: SSHD_[66642]: %SECURITY-SSHD-3-ERR_GENERAL : Failed to receive User authentication request 
+RP/0/RP0/CPU0:May  3 17:39:12.633 UTC: SSHD_[66632]: %SECURITY-SSHD-6-INFO_GENERAL : Client closes socket connection 
+RP/0/RP0/CPU0:May  3 17:39:12.633 UTC: SSHD_[66632]: %SECURITY-SSHD-3-ERR_GENERAL : Failed to receive Service authentication request 
+RP/0/RP0/CPU0:May  3 17:40:22.096 UTC: SSHD_[65740]: %SECURITY-SSHD-6-INFO_SUCCESS : Successfully authenticated user 'cisco' from '192.168.255.107' on 'vty0'(cipher 'aes128-ctr', mac 'hmac-sha2-256')
+Lo11               up          up          
+Lo12               up          up          
+Nu0                up          up          
+Mg0/RP0/CPU0/0     up          up
+interface Loopback11
+!
+interface Loopback12
+!
+interface MgmtEth0/RP0/CPU0/0
+ ipv4 address dhcp
+!
+interface GigabitEthernet0/0/0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/1
+ shutdown
+!
+interface GigabitEthernet0/0/0/2
+ shutdown
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+interface GigabitEthernet0/0/0/4
+ shutdown
+!
+interface GigabitEthernet0/0/0/5
+ shutdown
+!
+interface GigabitEthernet0/0/0/6
+ shutdown
+!
+interface GigabitEthernet0/0/0/7
+ shutdown
+!
+interface GigabitEthernet0/0/0/8
+ shutdown
+!
+interface GigabitEthernet0/0/0/9
+ shutdown
+!
+% No such configuration item(s)

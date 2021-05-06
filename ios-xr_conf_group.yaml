@@ -1,0 +1,48 @@
+- name: Push configuration on IOS-XRv 9000Sandbox
+  hosts: xr-sandbox,ios-xr
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Configuring config group for vrf bl
+      cisco.iosxr.iosxr_config:
+        lines:
+        - send-community-ebgp 
+        - route-policy set-vrf-lpref-in(80) in
+        - route-policy set-vrf-med-out(2100) out
+        - soft-reconfiguration inbound
+        parents:
+        - group vrf-bl-nbr
+        - router bgp '[0-9]*'
+        - vrf '.*'
+        - neighbor '[0-9]*\..*\..*\..*'
+        - address-family ipv4 unicast
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: Configuring config group for vrf hl
+      cisco.iosxr.iosxr_config:
+        lines:
+        - send-community-ebgp
+        - route-policy set-vrf-lpref-in(100) in
+        - route-policy set-vrf-med-out(0) out
+        - soft-reconfiguration inbound
+        parents:
+        - group vrf-hl-nbr
+        - router bgp '[0-9]*'
+        - vrf '.*'
+        - neighbor '[0-9]*\..*\..*\..*'
+        - address-family ipv4 unicast
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+# Commands to run:
+#1) ansible-playbook xr_sandbox_conf_bgp_vrf_parent_lines.yaml -u admin -k
+# !!Please use the  following password C1sco12345 when prompted

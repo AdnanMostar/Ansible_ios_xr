@@ -1,7 +1,7 @@
 - name: Push VRRP configuration commands to IOS_XR_CML
   hosts: ios-xr
   gather_facts: false
-  connection: local
+  connection: ansible.netcommon.network_cli
 
   tasks:
     - name: configuration commands are running
@@ -11,7 +11,7 @@
         - priority 130
         - address 192.168.23.2
         parents:
-        - router vrrp 
+        - router vrrp
         - interface GigabitEthernet0/0/0/0
         - address-family ipv4
         - vrrp 130
@@ -20,17 +20,10 @@
 
     -  debug: var=print_output.stdout_lines
 
-    - name: save output to a file
-      lineinfile:
-        create: yes
-        line: "{{item}}"
-        path: ./output/{{ inventory_hostname }}.txt
-      with_items: "{{ print_output.stdout }}"
-      
-- name: Push VRRP configuration commands to IOS_XR_SANNDBOX
+- name: Push VRRP configuration commands to IOS_XR_SANDBOX
   hosts: xr-sandbox
   gather_facts: false
-  connection: local
+  connection: ansible.netcommon.network_cli
 
   tasks:
     - name: configuration commands are running
@@ -40,7 +33,7 @@
         - priority 100
         - address 192.168.23.2
         parents:
-        - router vrrp 
+        - router vrrp
         - interface GigabitEthernet0/0/0/1
         - address-family ipv4
         - vrrp 130
@@ -54,9 +47,8 @@
         create: yes
         line: "{{item}}"
         path: ./output/{{ inventory_hostname }}.txt
-      with_items: "{{ print_output.stdout }}"      
-      
+      with_items: "{{ print_output.stdout }}"
+
 # Commands to run:
-#1) ansible-playbook ios-xr_conf_vrrp_aach.yaml -u akahric -k
+#1) ansible-playbook ios-xr_conf_vrrp_aach.yaml -u admin -k
 # !!Please change to your username and use your radius password when prompted
-      

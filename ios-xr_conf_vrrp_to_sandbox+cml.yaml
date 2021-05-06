@@ -1,7 +1,7 @@
-- name: Push VRRP configuration commands to IOS XR
+- name: Push VRRP configuration commands to IOS_XR_CML
   hosts: ios-xr
   gather_facts: false
-  connection: local
+  connection: ansible.netcommon.network_cli
 
   tasks:
     - name: configuration commands are running
@@ -9,6 +9,29 @@
         lines:
         - name master
         - priority 130
+        - address 192.168.23.2
+        parents:
+        - router vrrp
+        - interface GigabitEthernet0/0/0/0
+        - address-family ipv4
+        - vrrp 130
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+
+- name: Push VRRP configuration commands to IOS_XR_SANDBOX
+  hosts: xr-sandbox
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: configuration commands are running
+      cisco.iosxr.iosxr_config:
+        lines:
+        - name master
+        - priority 100
         - address 192.168.23.2
         parents:
         - router vrrp
@@ -28,5 +51,5 @@
       with_items: "{{ print_output.stdout }}"
 
 # Commands to run:
-#1) ansible-playbook ios-xr_conf_vrrp_aach.yaml -u akahric -k
+#1) ansible-playbook ios-xr_conf_vrrp_to_sandbox+cml.yaml -u admin -k
 # !!Please change to your username and use your radius password when prompted

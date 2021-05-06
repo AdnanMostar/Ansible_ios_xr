@@ -4,7 +4,7 @@
   connection: ansible.netcommon.network_cli
 
   tasks:
-    - name: configuration commands are running
+    - name: onfiguring master vrrp router
       cisco.iosxr.iosxr_config:
         lines:
         - name master
@@ -27,7 +27,7 @@
   connection: ansible.netcommon.network_cli
 
   tasks:
-    - name: configuration commands are running
+    - name: configuration backup vrrp router
       cisco.iosxr.iosxr_config:
         lines:
         - name master

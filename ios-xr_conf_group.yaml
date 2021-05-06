@@ -7,7 +7,7 @@
     - name: Configuring config group for vrf bl
       cisco.iosxr.iosxr_config:
         lines:
-        - send-community-ebgp 
+        - send-community-ebgp
         - route-policy set-vrf-lpref-in(80) in
         - route-policy set-vrf-med-out(2100) out
         - soft-reconfiguration inbound

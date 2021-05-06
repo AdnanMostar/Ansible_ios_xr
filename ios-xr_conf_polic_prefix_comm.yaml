@@ -1,0 +1,20 @@
+- name: Push Policy,Prefix-list,Community config to CiscoSandbox ASR9k
+  hosts: xr-sandbox
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: Configure Route-Policy,Prefix-list,Community
+      cisco.iosxr.iosxr_config:
+        src: policy.cfg
+        replace: line
+        backup: yes
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+
+# Commands to run:
+#1) ansible-playbook  ios-xr_conf_polic_prefix_comm.yaml -u admin -k
+# !!Please use the following password when prompted C1sco12345

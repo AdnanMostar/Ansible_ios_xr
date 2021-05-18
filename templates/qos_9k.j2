@@ -1,0 +1,890 @@
+policy-map in-bb
+ class mpls-network-control
+  set qos-group 7
+ ! 
+ class mpls-premium
+  set qos-group 4
+ ! 
+ class mpls-standard
+  set qos-group 6
+ ! 
+ class mpls-critical
+  set qos-group 2
+ ! 
+ class mpls-voice-control
+  set qos-group 3
+ ! 
+ class mpls-video
+  set qos-group 5
+ ! 
+ class mpls-data-applications
+  set qos-group 1
+ ! 
+ class class-default
+  set qos-group 0
+ ! 
+ end-policy-map
+! 
+policy-map out-bb
+ class group-video
+  police rate percent 15 
+  ! 
+ ! 
+ class group-critical
+  priority level 1 
+  police rate percent 20 
+  ! 
+ ! 
+ class group-voice-control
+  bandwidth percent 5 
+ ! 
+ class group-data-applications
+  bandwidth percent 10 
+ ! 
+ class group-network-control
+  bandwidth percent 5 
+ ! 
+ class group-premium
+  bandwidth percent 10 
+ ! 
+ class group-standard
+  bandwidth percent 10 
+ ! 
+ class class-default
+  random-detect default 
+ ! 
+ end-policy-map
+! 
+policy-map in-dscp
+ class NETWORK-CONTROL
+  set mpls experimental imposition 7
+  set qos-group 7
+ ! 
+ class VIDEO
+  set mpls experimental imposition 5
+  set qos-group 5
+ ! 
+ class DATA_APPLICATIONS
+  set mpls experimental imposition 1
+  set qos-group 1
+ ! 
+ class VOICE_CONTROL
+  set mpls experimental imposition 3
+  set qos-group 3
+ ! 
+ class dscp-premium
+  set qos-group 4
+  set mpls experimental imposition 4
+ ! 
+ class dscp-standard
+  set qos-group 6
+  set mpls experimental imposition 6
+ ! 
+ class dscp-critical
+  set qos-group 2
+  set mpls experimental imposition 2
+ ! 
+ class class-default
+  set qos-group 0
+  set mpls experimental imposition 0
+ ! 
+ end-policy-map
+! 
+policy-map shape-1g
+ class class-default
+  shape average 950000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-2m
+ class class-default
+  shape average 2000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-4m
+ class class-default
+  shape average 4000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-5m
+ class class-default
+  shape average 5000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-6m
+ class class-default
+  shape average 6000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-8m
+ class class-default
+  shape average 8000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-10m
+ class class-default
+  shape average 8500000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-20m
+ class class-default
+  shape average 18000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-50m
+ class class-default
+  shape average 47000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-60m
+ class class-default
+  shape average 60000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-69m
+ class class-default
+  shape average 69000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-70m
+ class class-default
+  shape average 70000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map citrix-qos
+ class group-premium
+  bandwidth percent 30 
+ ! 
+ class class-default
+  random-detect default 
+ ! 
+ end-policy-map
+! 
+policy-map shape-100m
+ class class-default
+  shape average 94000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-200m
+ class class-default
+  shape average 190000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-250m
+ class class-default
+  shape average 240000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-300m
+ class class-default
+  shape average 290000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-400m
+ class class-default
+  shape average 390000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-500m
+ class class-default
+  shape average 480000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-1g
+ class class-default
+  service-policy citrix-qos
+  shape average 950000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-2m
+ class class-default
+  service-policy citrix-qos
+  shape average 2000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-4m
+ class class-default
+  service-policy citrix-qos
+  shape average 4000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-5m
+ class class-default
+  service-policy citrix-qos
+  shape average 5000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-6m
+ class class-default
+  service-policy citrix-qos
+  shape average 6000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-8m
+ class class-default
+  service-policy citrix-qos
+  shape average 8000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map citrix-voice-qos
+ class group-critical
+  police rate percent 20 
+  ! 
+  priority level 1 
+ ! 
+ class group-premium
+  bandwidth percent 30 
+ ! 
+ class class-default
+  random-detect default 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-10m
+ class class-default
+  service-policy citrix-qos
+  shape average 8500000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-20m
+ class class-default
+  service-policy citrix-qos
+  shape average 18000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-50m
+ class class-default
+  service-policy citrix-qos
+  shape average 47000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-70m
+ class class-default
+  service-policy citrix-qos
+  shape average 70000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-100m
+ class class-default
+  service-policy citrix-qos
+  shape average 94000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-200m
+ class class-default
+  service-policy citrix-qos
+  shape average 190000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-250m
+ class class-default
+  service-policy citrix-qos
+  shape average 240000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-300m
+ class class-default
+  service-policy citrix-qos
+  shape average 290000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-500m
+ class class-default
+  service-policy citrix-qos
+  shape average 480000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map citrix-voice-voip-qos
+ class group-critical
+  police rate percent 20 
+  ! 
+  priority level 1 
+ ! 
+ class group-premium
+  bandwidth percent 30 
+ ! 
+ class VIDEO
+  bandwidth percent 15 
+ ! 
+ class class-default
+  random-detect default 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-1g
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 950000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-2m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 2000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-4m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 4000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-5m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 5000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-6m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 6000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-8m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 8000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-10m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 8500000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-20m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 18000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-50m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 47000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-70m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 70000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-100m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 94000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-200m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 190000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-250m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 240000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-300m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 290000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-500m
+ class class-default
+  service-policy citrix-voice-qos
+  shape average 480000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map citrix-voice-standard-qos
+ class group-critical
+  police rate percent 20 
+  ! 
+  priority level 1 
+ ! 
+ class group-premium
+  bandwidth percent 30 
+ ! 
+ class DATA_APPLICATIONS
+  bandwidth percent 20 
+ ! 
+ class class-default
+  random-detect default 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-1g
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 950000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-2m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 2000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-4m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 4000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-5m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 5000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-6m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 6000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-8m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 8000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-10m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 8500000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-20m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 18000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-50m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 47000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-70m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 70000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-100m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 94000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-200m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 190000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-250m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 240000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-300m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 290000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-voip-500m
+ class class-default
+  service-policy citrix-voice-voip-qos
+  shape average 480000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map citrix-voip-video-standard-qos
+ class group-critical
+  police rate percent 20 
+  ! 
+  priority level 1 
+ ! 
+ class group-premium
+  bandwidth remaining percent 30 
+ ! 
+ class VIDEO
+  police rate percent 15 
+  ! 
+ ! 
+ class DATA_APPLICATIONS
+  bandwidth remaining percent 15 
+ ! 
+ class class-default
+  random-detect default 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-1g
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 950000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-2m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 2000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-4m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 4000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-5m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 5000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-6m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 6000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-8m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 8000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-10m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 8500000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-20m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 18000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-50m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 47000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-70m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 70000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-100m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 94000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-200m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 190000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-250m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 240000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-300m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 290000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voice-standard-500m
+ class class-default
+  service-policy citrix-voice-standard-qos
+  shape average 480000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-1g
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 950000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-2m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 2000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-4m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 4000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-5m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 5000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-6m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 6000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-8m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 8000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-10m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 8500000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-20m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 18000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-50m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 47000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-70m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 70000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-100m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 94000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-200m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 190000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-250m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 240000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-300m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 290000000 bps 
+ ! 
+ end-policy-map
+! 
+policy-map shape-citrix-voip-video-standard-500m
+ class class-default
+  service-policy citrix-voip-video-standard-qos
+  shape average 480000000 bps 
+ ! 
+ end-policy-map
+!
+class-map match-any VIDEO
+ match dscp cs4 af41 af42 
+ end-class-map
+! 
+class-map match-all mpls-video
+ match mpls experimental topmost 5 
+ end-class-map
+! 
+class-map match-all group-video
+ match qos-group 5 
+ end-class-map
+! 
+class-map match-all dscp-premium
+ match dscp af11 
+ end-class-map
+! 
+class-map match-all mpls-premium
+ match mpls experimental topmost 4 
+ end-class-map
+! 
+class-map match-any VOICE_CONTROL
+ match precedence 3 
+ match dscp cs3 
+ end-class-map
+! 
+class-map match-all dscp-critical
+ match dscp ef 
+ end-class-map
+! 
+class-map match-all dscp-standard
+ match dscp af12 
+ end-class-map
+! 
+class-map match-all group-premium
+ match qos-group 4 
+ end-class-map
+! 
+class-map match-all mpls-critical
+ match mpls experimental topmost 2 
+ end-class-map
+! 
+class-map match-all mpls-standard
+ match mpls experimental topmost 6 
+ end-class-map
+! 
+class-map match-all group-critical
+ match qos-group 2 
+ end-class-map
+! 
+class-map match-all group-standard
+ match qos-group 6 
+ end-class-map
+! 
+class-map match-any NETWORK-CONTROL
+ match precedence network 
+ match dscp cs7 
+ end-class-map
+! 
+class-map match-any DATA_APPLICATIONS
+ match dscp af21 cs2 
+ end-class-map
+! 
+class-map match-all mpls-voice-control
+ match mpls experimental topmost 3 
+ end-class-map
+! 
+class-map match-any group-voice-control
+ match qos-group 3 
+ end-class-map
+! 
+class-map match-all mpls-network-control
+ match mpls experimental topmost 7 
+ end-class-map
+! 
+class-map match-all group-network-control
+ match qos-group 7 
+ end-class-map
+! 
+class-map match-all mpls-data-applications
+ match mpls experimental topmost 1 
+ end-class-map
+! 
+class-map match-any group-data-applications
+ match qos-group 1 
+ end-class-map
+!
+

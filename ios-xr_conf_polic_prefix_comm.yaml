@@ -6,7 +6,7 @@
   tasks:
     - name: Configure Route-Policy,Prefix-list,Community
       cisco.iosxr.iosxr_config:
-        src: policy.cfg
+        src: ./templates/policy.cfg
         replace: line
         backup: yes
 
@@ -16,6 +16,6 @@
 
 
 # Commands to run:
-#1) ansible-playbook  ios-xr_conf_polic_prefix_comm.yaml -u admin -k
+#1) ansible-playbook ios-xr_conf_polic_prefix_comm.yaml -u admin -k
 # !!Please use the following password when prompted C1sco12345
 

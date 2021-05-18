@@ -1,0 +1,46 @@
+vrf {{ vrf_name }}
+ rd 1:1
+ address-family ipv4 unicast
+  import route-target 1:1
+  !
+  export route-target 1:1
+  !
+ !
+!
+interface {{ int1_name_numb }}
+ ipv4 address {{ int1_addr }}
+ no shut
+!
+interface {{ int2_name_numb }}
+ vrf {{ vrf_name }}
+ ipv4 address {{ int2_addr }}
+ no shut
+!
+interface {{ int3_name_numb }}
+ ipv4 address {{ int3_addr }}
+ no shut
+!
+router ospf {{ ospf_proc }}
+  mpls ldp auto
+  area {{ ospf_area }}
+    interface {{ int1_name_numb }}
+    !
+    interface {{ int3_name_numb }}
+    !
+  !
+!
+router bgp {{ bgp_proc }}
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+ address-family vpnv4 unicast
+ !
+ neighbor {{ bgp_neigh1 }}
+  remote-as {{ remote_as1 }}
+  update-source {{ int1_name_numb }}
+  address-family vpnv4 unicast
+  !
+ !
+ vrf {{ vrf_name }}
+  rd 1:1
+ !
+!

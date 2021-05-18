@@ -1,12 +1,12 @@
 - name: Push configuration to CiscoSandbox ASR9k
-  hosts: xr-sandbox
+  hosts: xr-all
   gather_facts: false
   connection: local
 
   tasks:
     - name: Configure QOS Class-Map from file 
       cisco.iosxr.iosxr_config:
-        src: qos.cfg
+        src: ./templates/qos_9k.j2
         replace: line
         backup: yes
 
@@ -16,5 +16,5 @@
 
 
 # Commands to run:
-#1) ansible-playbook  xr_sandbox_conf_qos_from_file.yaml -u admin -k
+#1) ansible-playbook  ios-xr_conf_qos_from_file.yaml -u admin -k
 # !!Please use the following password when prompted C1sco12345

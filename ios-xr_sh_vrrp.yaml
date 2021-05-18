@@ -8,10 +8,8 @@
     - name: show commands are running
       iosxr_command:
         commands:
-          - sh int descr | i up
-          - sh ip int br | i up
-          - show run int 
-          - sh run router vrrp
+          - sh run router vrrp 
+          - sh vrrp summary
 
       register: print_output
 

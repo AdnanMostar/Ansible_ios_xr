@@ -1,0 +1,22 @@
+- name: Push configuration commands from file to IOS
+  hosts: 192.168.255.78
+  gather_facts: false
+  connection: local
+  vars_files:
+    - ./host_vars/cml_xr
+
+  tasks:
+    - name: configuration commands are running
+      cisco.iosxr.iosxr_config:
+        src: ./templates/xr9k.j2
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+
+# Commands to run:
+#1) Please change variable in an appropriate *vars files to meet your needs
+#2) ansible-playbook ios-xr_conf_pe1.yaml
+#3)!!Please change to your username and use your radius password when prompted
+

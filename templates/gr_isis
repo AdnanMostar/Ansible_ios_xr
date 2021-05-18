@@ -1,0 +1,32 @@
+group isis-core
+ router isis '.*'
+  interface 'Bundle-Ether.*'
+   circuit-type level-2-only
+   bfd minimum-interval 300
+   bfd multiplier 3
+   bfd fast-detect ipv4
+   point-to-point
+   address-family ipv4 unicast
+    fast-reroute per-prefix level 2
+    mpls ldp sync level 2
+   !
+   address-family ipv6 unicast
+   !
+  !
+  interface '^(Ten,Twen.*,Hund.*)Gig.*'
+   circuit-type level-2-only
+   bfd minimum-interval 300
+   bfd multiplier 3
+   bfd fast-detect ipv4
+   point-to-point
+   address-family ipv4 unicast
+    fast-reroute per-prefix level 2
+    mpls ldp sync level 2
+   !
+   address-family ipv6 unicast
+   !
+  !
+ !
+end-group
+
+

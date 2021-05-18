@@ -1,0 +1,19 @@
+push_to_host: xr-sandbox
+vrrp_prior: 100
+vrrp_group: 1
+host_name:
+vrrp_name: backup
+vrrp_addr: 192.168.23.3
+vrrp_int: GigabitEthernet0/0/0/1
+import_rt: 1:100
+export_rt: 1:100
+vrf_name: customer_100
+bgp_proc: 1
+bgp_neigh: 192.168.255.250
+bgp_neigh2:
+bgp_neigh3:
+bgp_neigh4:
+bgp_neigh5:
+remote_as: 1
+loop_numb: 25
+

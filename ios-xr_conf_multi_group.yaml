@@ -1,0 +1,50 @@
+- name: Configuration group from template to IOS_XR9k
+  hosts: xr-all
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: configuring group core-interface
+      cisco.iosxr.iosxr_config:
+        src: ./templates/gr_core_int
+      tags: int
+
+    - name: configuring group isis-core
+      cisco.iosxr.iosxr_config:
+        src: ./templates/gr_isis
+      tags: isis
+
+    - name: configurng  multiple bgp config groups
+      cisco.iosxr.iosxr_config:
+        src: ./templates/gr_bgp
+      tags: bgp
+
+    - name: show commands are running
+      iosxr_command:
+        commands:
+          - sh run group 
+      tags: always
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+      tags: always
+
+#IMPORTANT!!
+#changed a command for gr_isis from  interface '^(Ten|Twen.*|Hund.*)Gig.*'
+#1b)to '^(Ten,Twen.*,Hund.*)Gig.*'
+#changed a command for gr_int with the same logic from real network to..
+#adapt it for the LAB wich accepted only commands with commas in between
+#pushed command for gr_bgp until line 56 from excel docu "sh run group"
+#i need to check why accepted commands  only until the line 56
+#ansible-playbook -u admin -k ios-xr_conf_multi_group.yaml --tag isis
+
+

@@ -1,0 +1,27 @@
+- name: Push configuration on IOS-XRv 9000Sandbox
+  hosts: xr-sandbox
+  gather_facts: false
+  connection: local
+  vars_files:
+    - ./host_vars/xrsandbox
+
+  tasks:
+    - name: VRF configuration is running
+      cisco.iosxr.iosxr_config:
+        lines:
+        - import route-target {{ import_rt }}
+        - export route-target {{ export_rt }}
+        parents:
+        - vrf {{ vrf_name }}
+        - address-family ipv4 unicast
+      tags: vrf
+
+    - name: BGP configuration is running
+      cisco.iosxr.iosxr_config:
+        lines:
+        - redistribute connected
+        parents:
+        - router bgp {{ bgp_proc }}
+        - neighbor {{ bgp_neigh }} remote-as {{ remote_as }}
+        - address-family ipv4 unicast
+      tags: bgp  

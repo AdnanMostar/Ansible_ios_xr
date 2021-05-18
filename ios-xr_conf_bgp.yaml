@@ -1,5 +1,5 @@
 ---
-- name: Checking Parametized Policy
+- name: Configure BGP with BGP module
   hosts: xr-sandbox
   gather_facts: false
   connection: network_cli
@@ -32,12 +32,6 @@
 
     -  debug: var=print_output.stdout_lines
 
-    - name: save output to a file
-      lineinfile:
-        create: yes
-        line: "{{item}}"
-        path: ./output/{{ inventory_hostname }}.txt
-      with_items: "{{ print_output.stdout }}"
 
 # Commands to run:
 #1) ansible-playbook ios-xr_conf_bgp_sandbox.yaml -u admin -k

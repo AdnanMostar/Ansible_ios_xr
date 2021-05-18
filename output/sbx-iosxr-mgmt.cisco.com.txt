@@ -1,48 +1,215 @@
-Interface                      IP-Address      Status          Protocol Vrf-Name
-Loopback100                    1.1.1.100       Up              Up       default 
-Loopback178                    unassigned      Up              Up       default 
-Loopback200                    1.1.1.200       Up              Up       default 
-MgmtEth0/RP0/CPU0/0            10.10.20.175    Up              Up       default 
-GigabitEthernet0/0/0/0         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/1         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/2         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/3         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/4         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/5         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/6         unassigned      Shutdown        Down     default
-Interface                      IP-Address      Status          Protocol Vrf-Name
-Loopback100                    1.1.1.100       Up              Up       default 
-Loopback178                    unassigned      Up              Up       default 
-Loopback200                    1.1.1.200       Up              Up       default 
-MgmtEth0/RP0/CPU0/0            10.10.20.175    Up              Up       default 
-GigabitEthernet0/0/0/0         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/1         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/2         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/3         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/4         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/5         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/6         unassigned      Shutdown        Down     default
-Interface                      IP-Address      Status          Protocol Vrf-Name
-Loopback100                    1.1.1.100       Up              Up       default 
-Loopback178                    unassigned      Up              Up       default 
-Loopback200                    1.1.1.200       Up              Up       default 
-MgmtEth0/RP0/CPU0/0            10.10.20.175    Up              Up       default 
-GigabitEthernet0/0/0/0         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/1         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/2         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/3         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/4         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/5         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/6         unassigned      Shutdown        Down     default
-Interface                      IP-Address      Status          Protocol Vrf-Name
-Loopback100                    1.1.1.100       Up              Up       default 
-Loopback178                    unassigned      Up              Up       default 
-Loopback200                    1.1.1.200       Up              Up       default 
-MgmtEth0/RP0/CPU0/0            10.10.20.175    Up              Up       default 
-GigabitEthernet0/0/0/0         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/1         unassigned      Up              Up       default 
-GigabitEthernet0/0/0/2         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/3         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/4         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/5         unassigned      Shutdown        Down     default 
-GigabitEthernet0/0/0/6         unassigned      Shutdown        Down     default
+Lo100              up          up          ***MERGE LOOPBACK 100****
+Lo200              up          up          ***MERGE LOOPBACK 200****
+Nu0                up          up          
+Mg0/RP0/CPU0/0     up          up
+
+interface Loopback100
+ description ***MERGE LOOPBACK 100****
+ ipv4 address 1.1.1.100 255.255.255.255
+!
+interface Loopback200
+ description ***MERGE LOOPBACK 200****
+ ipv4 address 1.1.1.200 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ ipv4 address 10.10.20.175 255.255.255.0
+!
+interface GigabitEthernet0/0/0/1
+ shutdown
+!
+interface GigabitEthernet0/0/0/2
+ shutdown
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+interface GigabitEthernet0/0/0/4
+ shutdown
+!
+interface GigabitEthernet0/0/0/5
+ shutdown
+!
+interface GigabitEthernet0/0/0/6
+ shutdown
+!
+router vrrp
+ interface GigabitEthernet0/0/0/1
+  address-family ipv4
+   vrrp 1
+    name backup
+    priority 100
+    address 192.168.23.3
+   !
+  !
+ !
+!
+router vrrp
+ interface GigabitEthernet0/0/0/1
+  address-family ipv4
+   vrrp 1
+    name backup
+    priority 100
+    address 192.168.23.3
+   !
+  !
+ !
+!
+router vrrp
+ interface GigabitEthernet0/0/0/1
+  address-family ipv4
+   vrrp 1
+    name backup
+    priority 100
+    address 192.168.23.3
+   !
+  !
+ !
+!
+router vrrp
+ interface GigabitEthernet0/0/0/1
+  address-family ipv4
+   vrrp 1
+    name backup
+    priority 100
+    address 192.168.23.3
+   !
+  !
+ !
+!
+router vrrp
+ interface GigabitEthernet0/0/0/1
+  address-family ipv4
+   vrrp 1
+    name backup
+    priority 100
+    address 192.168.23.3
+   !
+  !
+ !
+!
+group vrf-bl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(80) in
+     route-policy set-vrf-med-out(2100) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-hl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(100) in
+     route-policy set-vrf-med-out(0) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-bl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(80) in
+     route-policy set-vrf-med-out(2100) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-hl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(100) in
+     route-policy set-vrf-med-out(0) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-bl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(80) in
+     route-policy set-vrf-med-out(2100) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-hl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(100) in
+     route-policy set-vrf-med-out(0) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-bl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(80) in
+     route-policy set-vrf-med-out(2100) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-hl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(100) in
+     route-policy set-vrf-med-out(0) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-hl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(100) in
+     route-policy set-vrf-med-out(0) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group

@@ -1,0 +1,10 @@
+- name: Configure configuration group from file to IOS XR
+  hosts: 192.168.255.78
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: configuration commands are running
+      cisco.iosxr.iosxr_config:
+        src: ./templates/gr_core_int
+

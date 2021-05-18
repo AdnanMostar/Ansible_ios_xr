@@ -39,12 +39,10 @@
       iosxr_command:
         commands:
           - sh run group
-      tags: always
 
       register: print_output
 
     -  debug: var=print_output.stdout_lines
-      
 
     - name: save output to a file
       lineinfile:
@@ -52,10 +50,4 @@
         line: "{{item}}"
         path: ./output/{{ inventory_hostname }}.txt
       with_items: "{{ print_output.stdout }}"
-      tags: always
-
-#Commands to run:
-# 1.)ansible-playbook ios-xr_conf_group.yaml -u admin -k --tag hl
-# 1.)!!!!!!!!!!!!You must use the same password on both devices CML and Sandbox
-# 2.)Please move to output directory to see the results of all commands
-
+      

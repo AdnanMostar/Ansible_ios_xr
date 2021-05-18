@@ -1,0 +1,28 @@
+- name: Configure configuration group from file to IOS XR
+  hosts: xr-all
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: configuration commands are running
+      cisco.iosxr.iosxr_config:
+        src: ./templates/gr_core_int
+      tags: int  
+
+    - name: configuration commands are running
+      cisco.iosxr.iosxr_config:
+        src: ./templates/gr_isis
+      tags: isis  
+
+    - name: configuration commands are running
+      cisco.iosxr.iosxr_config:
+        src: ./templates/gr_bgp
+      tags: bgp  
+
+#IMPORTANT!! 
+#changed a command for gr_isis from  interface '^(Ten|Twen.*|Hund.*)Gig.*'
+#1b)to '^(Ten,Twen.*,Hund.*)Gig.*'
+#changed a command for gr_int with the same logic from real network to.. 
+#adapt it for the LAB wich accepted only commands with commas in between
+#pushed command for gr_bgp until line 56 from excel docu "sh run group"
+#i need to check why accepted commands  only until the line 56

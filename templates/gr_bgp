@@ -1,0 +1,55 @@
+group vrf-bl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(80) in
+     route-policy set-vrf-med-out(2100) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-hl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(100) in
+     route-policy set-vrf-med-out(0) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group inet-bl-nbr
+ router bgp '[0-9]*'
+  neighbor '[0-9]*\..*\..*\..*'
+   remote-as 65000
+   address-family ipv4 unicast
+    send-community-ebgp
+    route-policy set-inet-lpref-in(80) in
+    route-policy set-inet-med-out(2100) out
+    remove-private-AS
+    soft-reconfiguration inbound
+   !
+  !
+ !
+end-group
+group inet-hl-nbr
+ router bgp '[0-9]*'
+  neighbor '[0-9]*\..*\..*\..*'
+   remote-as 65000
+   address-family ipv4 unicast
+    send-community-ebgp
+    route-policy set-inet-lpref-in(100) in
+    route-policy set-inet-med-out(0) out
+    remove-private-AS
+    soft-reconfiguration inbound
+   !
+  !
+ !

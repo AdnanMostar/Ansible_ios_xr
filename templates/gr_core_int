@@ -1,0 +1,19 @@
+group core-interface
+ interface 'Bundle-Ether.*'
+  mtu 9216
+  ipv4 mtu 9000
+  ipv6 mtu 9000
+  mpls
+   mtu 9088
+  !
+ !
+ interface '(^Ten,^Twen.*,^Hund.*)Gig.*'
+  mtu 9216
+  ipv4 mtu 9000
+  ipv6 mtu 9000
+  mpls
+   mtu 9088
+  !
+ !
+end-group
+

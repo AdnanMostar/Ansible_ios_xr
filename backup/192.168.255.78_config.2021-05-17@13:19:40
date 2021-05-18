@@ -1,0 +1,159 @@
+Building configuration...
+!! IOS XR Configuration 6.6.2
+!! Last configuration change at Mon May 17 02:56:53 2021 by admin
+!
+hostname PE1
+group vrf-bl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(80) in
+     route-policy set-vrf-med-out(2100) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+group vrf-hl-nbr
+ router bgp '[0-9]*'
+  vrf '.*'
+   neighbor '[0-9]*\..*\..*\..*'
+    address-family ipv4 unicast
+     send-community-ebgp
+     route-policy set-vrf-lpref-in(100) in
+     route-policy set-vrf-med-out(0) out
+     soft-reconfiguration inbound
+    !
+   !
+  !
+ !
+end-group
+domain name ios-xr.local
+username cisco
+ group root-lr
+ group cisco-support
+ password 7 030752180500
+!
+username lab
+ group root-lr
+ group cisco-support
+ password 7 0507070D
+!
+username akahric
+ group root-lr
+ secret 5 $1$/qoM$6UlTbu91l2grm80wCJHsM/
+!
+username admin
+ group root-lr
+ secret 5 $1$xVsE$nE13Y711PD6pJ17UEA5/V.
+!
+vrf CUSTOMER
+ rd 1:1
+ address-family ipv4 unicast
+  import route-target
+   1:1
+  !
+  export route-target
+   1:1
+  !
+ !
+!
+line default
+ transport input ssh
+!
+call-home
+ service active
+ contact smart-licensing
+ profile CiscoTAC-1
+  active
+  destination transport-method http
+ !
+!
+interface Loopback0
+ ipv4 address 2.2.2.2 255.255.255.255
+!
+interface Loopback7
+!
+interface Loopback11
+!
+interface Loopback12
+!
+interface Loopback20
+!
+interface Loopback25
+!
+interface MgmtEth0/RP0/CPU0/0
+ ipv4 address dhcp
+!
+interface GigabitEthernet0/0/0/0
+ vrf CUSTOMER
+ ipv4 address 192.168.12.2 255.255.255.0
+!
+interface GigabitEthernet0/0/0/1
+ ipv4 address 192.168.23.2 255.255.255.0
+!
+interface GigabitEthernet0/0/0/2
+ shutdown
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+interface GigabitEthernet0/0/0/4
+ shutdown
+!
+interface GigabitEthernet0/0/0/5
+ shutdown
+!
+interface GigabitEthernet0/0/0/6
+ shutdown
+!
+interface GigabitEthernet0/0/0/7
+ shutdown
+!
+interface GigabitEthernet0/0/0/8
+ shutdown
+!
+interface GigabitEthernet0/0/0/9
+ shutdown
+!
+router ospf 1
+ mpls ldp auto-config
+ area 0.0.0.0
+  interface Loopback0
+  !
+  interface GigabitEthernet0/0/0/1
+  !
+ !
+!
+router bgp 234
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+ !
+ address-family vpnv4 unicast
+ !
+ neighbor 4.4.4.4
+  remote-as 234
+  update-source Loopback0
+  address-family vpnv4 unicast
+  !
+ !
+ vrf CUSTOMER
+  rd 1:1
+ !
+!
+router vrrp
+ interface GigabitEthernet0/0/0/0
+  address-family ipv4
+   vrrp 1
+    name master
+    priority 150
+    address 192.168.23.3
+   !
+  !
+ !
+!
+ssh server v2
+end

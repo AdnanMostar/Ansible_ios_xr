@@ -1,0 +1,68 @@
+- name: Push VRRP configuration commands to IOS_XR1
+  hosts: "{{push_to_host}}"
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+  vars_files:
+    - ./host_vars/ear1.s16
+
+  tasks:
+    - name: configuration commands are running
+      cisco.iosxr.iosxr_config:
+        lines:
+        - name {{vrrp_name}}
+        - priority {{vrrp_prior}}
+        - address {{vrrp_addr}}
+        parents:
+        - router vrrp
+        - interface {{vrrp_int}}
+        - address-family ipv4
+        - vrrp {{vrrp_group}}
+
+- name: Push VRRP configuration commands to IOS_XR2
+  hosts: "{{push_to_host}}"
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+  vars_files:
+    - ./host_vars/ear1.s17
+
+  tasks:
+    - name: configuration commands are running
+      cisco.iosxr.iosxr_config:
+        lines:
+        - name {{vrrp_name}}
+        - priority {{vrrp_prior}}
+        - address {{vrrp_addr}}
+        parents:
+        - router vrrp
+        - interface {{vrrp_int}}
+        - address-family ipv4
+        - vrrp {{vrrp_group}}
+
+- name: VRRP Verification commands are running
+  hosts: ios-xr,xr-sandbox
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: show commands are running
+      iosxr_command:
+        commands:
+          - sh run router vrrp
+          - sh vrrp 
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+    - name: save output to a file
+      lineinfile:
+        create: yes
+        line: "{{item}}"
+        path: ./output/{{ inventory_hostname }}.txt
+      with_items: "{{ print_output.stdout }}"
+
+#Commands to run:
+# 1.)ansible-playbook ios-xr_conf_vrrp.yaml -u admin -k
+# 1.)!!!!!!!!!!!!You must use the same password on both devices CML and Sandbox
+# 2.)Please move to output directory to see the results of all commands
+

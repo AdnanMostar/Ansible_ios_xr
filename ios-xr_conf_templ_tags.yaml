@@ -2,38 +2,29 @@
   hosts: ios-xr
   gather_facts: false
   connection: ansible.netcommon.network_cli
+  vars_files:
+    - ./host_vars/cml_xr
+  tags: prvi  
 
   tasks:
     - name: configuration commands are running
       cisco.iosxr.iosxr_config:
-        src: 1.cfg
-
-      register: print_output
-
-    -  debug: var=print_output.stdout_lines
-
+        src: ./templates/1.cfg
+      
 
 - name: Push configuration commands from file to IOS_XR_SANDBOX
   hosts: xr-sandbox
   gather_facts: false
   connection: ansible.netcommon.network_cli
+  vars_files:
+    - ./host_vars/xrsandbox
+  tags: drugi
 
   tasks:
     - name: configuration commands are running
       cisco.iosxr.iosxr_config:
-        src: 2.cfg
-
-      register: print_output
-
-    -  debug: var=print_output.stdout_lines
-
-    - name: save output to a file
-      lineinfile:
-        create: yes
-        line: "{{item}}"
-        path: ./output/{{ inventory_hostname }}.txt
-      with_items: "{{ print_output.stdout }}"
+        src: ./templates/2.cfg
 
 # Commands to run:
-#1) ansible-playbook ios-xr_conf_multiple_files_to_multiple_devic.yaml -u admin -k
+#1) ansible-playbook ios-xr_conf_templ_tags.yaml -u admin -k --tags prvi
 # !!Please change to your username and use your radius password when prompted
